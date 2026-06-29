@@ -18,7 +18,8 @@ NS_MAP = {
     "untp": Namespace("https://vocabulary.uncefact.org/untp/"),
     "owl": Namespace("https://www.w3.org/2002/07/owl#"),
     # Add your own custom draft namespace prefix here
-    "h2": Namespace("https://heidi2o.cc/"),
+    "lac": Namespace("https://www.canada.ca/en/library-archives.html/#"),
+    "h2": Namespace("https://heidi2o.cc/#"),
 }
 
 def load_knowledge_base() -> Graph:
