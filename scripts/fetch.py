@@ -8,7 +8,7 @@ from rdflib import Graph
 # ==========================================
 # Easily add, remove, or modify target schemas here
 SCHEMAS = {
-    "dublin-core": {
+    "dcterms": {
         "url": "https://www.dublincore.org/specifications/dublin-core/dcmi-terms/dublin_core_terms.ttl",
         "format": "turtle",
     },
@@ -31,6 +31,10 @@ SCHEMAS = {
     "skos": {
         "url": "https://www.w3.org/2004/02/skos/core", 
         "format": "xml"
+    },
+    "schema": {
+        "url": "https://schema.org/version/latest/schemaorg-current-https.ttl", 
+        "format": "ttl"
     },
 }
 
