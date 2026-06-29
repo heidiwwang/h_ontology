@@ -1,0 +1,212 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix rule: <http://example.org/data/#> .
+@prefix schema: <https://schema.org/> .
+@prefix h2: <http://heidi2o.cc/#> .
+
+h2:LegalDraftingByDesign a schema:Book ;
+    schema:name "Legal Drafting by Design: A Guide to Analyzing and Writing Clear Laws and Contracts" ;
+    schema:author "Richard K. Neumann Jr.", "Donald L. Marritz" ;
+    schema:publisher "Wolters Kluwer" ;
+    schema:datePublished "2018" ;
+    schema:isbn "978-1454896029" ;
+    schema:url <https://aspenpublishing.com/products/neumann-legaldrafting1?variant=46866221400344> .
+
+rule: a owl:Ontology ; 
+    dcterms:source h2:LegalDraftingByDesign .
+
+rule:actor a rdfs:Class ;
+    rdfs:subClassOf rule:subject .
+
+rule:authority a rdfs:Class .
+
+rule:authority_holder a rdfs:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty rule:holds ;
+            owl:someValuesFrom rule:authority ],
+        rule:holder .
+
+rule:authorized_action a rdfs:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rule:authority_holder ;
+            owl:onProperty schema:agent ],
+        rule:object,
+        schema:Action .
+
+rule:commanded_action a rdfs:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:allValuesFrom rule:duty_holder ;
+            owl:onProperty schema:agent ],
+        rule:object,
+        schema:Action .
+
+rule:consequence a rdfs:Class ;
+    rdfs:subClassOf rule:declaration .
+
+rule:contingency a rdfs:Class ;
+    rdfs:comment "must be true or must occur to activate a rule; failure to satisfy the condition means the rule is not activated" ;
+    rdfs:subClassOf rule:declaration .
+
+rule:duty_holder a rdfs:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty rule:holds ;
+            owl:someValuesFrom rule:duty ],
+        rule:holder .
+
+rule:object a rdfs:Class .
+
+rule:operative_term a owl:ObjectProperty ;
+    rdfs:label "operative term" .
+
+rule:predicate_noun a rdfs:Class ;
+    rdfs:subClassOf rule:object .
+
+rule:right a rdfs:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty rule:has_holder ;
+            owl:someValuesFrom rule:right_holder ],
+        rule:rule .
+
+rule:right_holder a rdfs:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty rule:holds ;
+            owl:someValuesFrom rule:right ],
+        rule:holder .
+
+rule:rule a rdfs:Class ;
+    rdfs:label "rule" .
+
+rule:rule_set a rdfs:Class ;
+    rdfs:label "a set of rules" .
+
+rule:subject a rdfs:Class .
+
+rule:authorizes a owl:ObjectProperty ;
+    rdfs:domain rule:authority ;
+    rdfs:range rule:authorized_action .
+
+rule:conditional_on a owl:ObjectProperty ;
+    rdfs:label "conditional on" ;
+    rdfs:domain rule:rule ;
+    rdfs:range rule:contingency .
+
+rule:conditioned_on a owl:ObjectProperty ;
+    rdfs:label "conditioned on" ;
+    rdfs:domain rule:rule ;
+    rdfs:range rule:contingency .
+
+rule:corresponding_duty a rdfs:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty rule:has_corresponding_duty ;
+            owl:someValuesFrom rule:right ],
+        rule:duty .
+
+rule:corresponding_right a rdfs:Class ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty rule:corresponds_to ;
+            owl:someValuesFrom rule:duty ],
+        rule:right .
+
+rule:has_consequence a owl:ObjectProperty ;
+    rdfs:label "has a consequence for failing a duty" ;
+    rdfs:domain rule:duty ;
+    rdfs:range rule:consequence .
+
+rule:is_held_by a owl:ObjectProperty ;
+    rdfs:label "is held by" ;
+    owl:inverseOf rule:holds .
+
+rule:subject_to a owl:ObjectProperty ;
+    rdfs:label "subject to" ;
+    rdfs:domain rule:rule ;
+    rdfs:range rule:contingency .
+
+rule:discretionary_authority rdfs:comment "gives someone discretionary authority" ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onProperty rule:operative_term ;
+            owl:someValuesFrom rule:may ],
+        rule:rule .
+
+rule:has_action a owl:ObjectProperty ;
+    rdfs:label "the action imposed or authorized" ;
+    rdfs:domain rule:duty ;
+    rdfs:range rule:object .
+
+rule:has_corresponding_right a owl:ObjectProperty ;
+    rdfs:label "has corresponding right" ;
+    rdfs:domain rule:duty ;
+    rdfs:range rule:right ;
+    owl:inverseOf rule:has_corresponding_duty .
+
+rule:has_holder a owl:ObjectProperty ;
+    rdfs:domain [ owl:unionOf ( rule:duty rule:right rule:authority ) ] ;
+    rdfs:range [ owl:unionOf ( rule:duty_holder rule:right_holder rule:authority_holder ) ] .
+
+rule:has_predicate_noun a owl:ObjectProperty ;
+    rdfs:domain rule:declaration ;
+    rdfs:range rule:predicate_noun .
+
+rule:is_being a owl:ObjectProperty;
+    rdfs:label "is being" ;
+    rdfs:subPropertyOf rule:operative_term .
+
+rule:may a owl:ObjectProperty ;
+    rdfs:label "may" ;
+    rdfs:subPropertyOf rule:operative_term ;
+    rdfs:domain rule:discretionary_authority ;
+    rdfs:range rule:authorized_action
+    .
+
+rule:means a owl:ObjectProperty ;
+    rdfs:label "means" ;
+    rdfs:subPropertyOf rule:operative_term .
+
+rule:must a owl:ObjectProperty ;
+    rdfs:label "must" ;
+    rdfs:subPropertyOf rule:operative_term .
+
+rule:shall a owl:ObjectProperty ;
+    rdfs:label "shall" ;
+    rdfs:subPropertyOf rule:operative_term .
+
+rule:has_corresponding_duty a owl:ObjectProperty ;
+    rdfs:label "has corresponding duty" ;
+    rdfs:domain rule:right ;
+    rdfs:range rule:duty ;
+    owl:inverseOf rule:has_corresponding_right .
+
+rule:has_subject a owl:ObjectProperty ;
+    rdfs:label "the thing the rule is about" ;
+    rdfs:domain rule:rule ;
+    rdfs:range rule:subject .
+
+rule:declaration a rdfs:Class ;
+    rdfs:comment "Make something true; give it a definition" ;
+    rdfs:subClassOf rule:rule , [
+        a owl:Restriction ;
+        owl:onProperty rule:has_subject ;
+        owl:someValuesFrom rule:subject
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty rule:has_predicate_noun ;
+        owl:someValuesFrom rule:predicate_noun
+    ] .
+
+rule:holds a owl:ObjectProperty ;
+    rdfs:label "holds" ;
+    rdfs:domain [ owl:unionOf ( rule:duty_holder rule:right_holder rule:authority_holder ) ] ;
+    rdfs:range [ owl:unionOf ( rule:duty rule:right rule:authority ) ] .
+
+rule:duty a rdfs:Class ;
+    rdfs:comment "Impose a duty on someone; failure to comply with duty means a consequence is triggered." ;
+    rdfs:subClassOf rule:rule , [
+        a owl:Restriction ;
+        owl:onProperty rule:has_subject ;
+        owl:someValuesFrom rule:actor
+    ] , [
+        a owl:Restriction ;
+        owl:onProperty rule:has_action ;
+        owl:someValuesFrom rule:commanded_action
+    ] .
