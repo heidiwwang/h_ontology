@@ -7,11 +7,11 @@
 @prefix h2: <http://heidi2o.cc/#> .
 
 h2:LegalDraftingByDesign a schema:Book ;
-    schema:name "Legal Drafting by Design: A Guide to Analyzing and Writing Clear Laws and Contracts" ;
-    schema:author "Richard K. Neumann Jr.", "Donald L. Marritz" ;
-    schema:publisher "Wolters Kluwer" ;
+    schema:name "Legal Drafting by Design: A Unified Approach" ;
+    schema:author "Richard K. Neumann Jr.", "J. Lyn Entrikin" ;
+    schema:publisher "Aspen Publishing" ;
     schema:datePublished "2018" ;
-    schema:isbn "978-1454896029" ;
+    schema:isbn "9781454841395" ;
     schema:url <https://aspenpublishing.com/products/neumann-legaldrafting1?variant=46866221400344> .
 
 rule: a owl:Ontology ; 
