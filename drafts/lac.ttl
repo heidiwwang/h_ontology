@@ -4,37 +4,54 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 
-lac:BroaderTerm a owl:ObjectProperty , rdf:Property ; 
+lac:BroaderTerm a owl:ObjectProperty ; 
     skos:label "broader term"@en , "terme générique"@fr ;
+    rdfs:domain lac:PreferredTerm ;
+    rdfs:range lac:PreferredTerm ;
     skos:definition "Preferred term representing a concept broader in scope and to which one or more narrower terms are subordinate in a hierarchy. A broader term is normally in a 'genus/species' or 'whole/part' relationship to the preferred term of the record."@en, "Descripteur qui représente un concept dont l'étendue est plus large et auquel sont subordonnés un ou plusieurs termes spécifiques dans une hiérarchie. Un terme générique est généralement lié au descripteur de la notice par une relation de type « genre/espèce » ou « tout/partie »."@fr ;
     skos:isDefinedBy <https://canada.multites.net/cst/def.asp?lang=En&n=0594D979-1> , <https://canada.multites.net/tsb/def.asp?lang=Fr&n=0594D979-1> .
 
-lac:NarrowerTerm a owl:ObjectProperty , rdf:Property ;
+lac:NarrowerTerm a owl:ObjectProperty;
     skos:label  "narrower term"@en , "terme spécifique"@fr ;
+    rdfs:domain lac:PreferredTerm ;
+    rdfs:range lac:PreferredTerm ;
     skos:definition "Preferred term representing a concept narrower in scope and that is subordinate to one or more broader terms in a hierarchy. A narrower term is normally in a 'genus/species' or 'whole/part' relationship to the preferred term of the record."@en , "Descripteur qui représente un concept dont l'étendue est plus limitée et qui est subordonné à un ou plusieurs termes génériques dans une hiérarchie. Un terme spécifique est généralement lié au descripteur de la notice par une relation de « genre/espèce » ou « tout/partie »."@fr ;
     skos:isDefinedBy <https://canada.multites.net/cst/def.asp?lang=En&n=0594D979-1> , <https://canada.multites.net/tsb/def.asp?lang=Fr&n=0594D979-1> .
 
-lac:French a owl:ObjectProperty , rdf:Property ;
+lac:French a owl:ObjectProperty ;
     skos:label "French"@en , "Français"@fr ;
     skos:comment "Used to link the English uri to the French uri"@en ;
     skos:isDefinedBy <https://canada.multites.net/cst/def.asp?lang=En&n=0594D979-1> , <https://canada.multites.net/tsb/def.asp?lang=Fr&n=0594D979-1> .
 
-lac:Use a owl:ObjectProperty , rdf:Property ;
+lac:Use a owl:ObjectProperty ;
+    skos:label "use"@en ;
+    rdfs:domain lac:NonPreferredTerm ;
+    rdfs:range lac:PreferredTerm
+    .
+
+lac:PreferredTerm a owl:Class ;
     skos:label "preferred term"@en , "descripteur"@fr ;
     skos:definition "Term used in indexing to represent a given concept. Also called descriptor. In the alphabetical list of results, preferred terms of the Government of Canada Core Subject Thesaurus appear in boldface. In term records, the relationship between preferred terms and non-preferred terms is shown by the reciprocal references 'Use' and 'Used for'."@en , "Terme utilisé lors de l'indexation pour représenter un concept donné. Aussi appelé terme préféré. Dans la liste alphabétique des résultats, le Thésaurus des sujets de base du gouvernement du Canada présente les descripteurs en caractères gras. Dans les notices des termes, la relation entre descripteurs and non-descripteurs s'exprime par les renvois réciproques « Employer » et « Employé pour »."@fr ;
     skos:isDefinedBy <https://canada.multites.net/cst/def.asp?lang=En&n=0594D979-1> , <https://canada.multites.net/tsb/def.asp?lang=Fr&n=0594D979-1> . 
 
-lac:UsedFor a owl:ObjectProperty , rdf:Property ;
+lac:UsedFor a owl:ObjectProperty ;
+    rdfs:domain lac:PreferredTerm ;
+    rdfs:range lac:NonPreferredTerm
+    .
+
+lac:NonPreferredTerm a owl:Class ;
     skos:label "non-preferred term"@en , "non-descripteur"@fr ;
     skos:definition "Synonym, quasi-synonym or spelling variant of a preferred term. A non-preferred term, also called synonym, non-descriptor, entry term or lead-in term, should not be used for indexing. Its role is to point users to the preferred term (the one that should be used in indexing). In the alphabetical list of results, non-preferred terms of the Government of Canada Core Subject Thesaurus appear in boldface and italics. In term records, the relationship between preferred terms and non-preferred terms is shown by the reciprocal references 'Use' and 'Used for'."@en , "Synonyme, quasi-synonyme ou variante orthographique d'un descripteur. Un non-descripteur, aussi appelé synonyme ou terme non préféré, ne doit pas être utilisé pour l'indexation mais sert de point d'accès pour diriger les utilisateurs vers un descripteur (terme préféré pour l'indexation). Dans la liste alphabétique des résultats, le Thésaurus des sujets de base du gouvernement du Canada présente les non-descripteurs en caractères gras et italiques. Dans les notices des termes, la relation entre descripteurs et non-descripteurs s'exprime par les renvois réciproques « Employer » et « Employé pour »."@fr ;
     skos:isDefinedBy <https://canada.multites.net/cst/def.asp?lang=En&n=0594D979-1> , <https://canada.multites.net/tsb/def.asp?lang=Fr&n=0594D979-1> .
 
-lac:SubjectCategory a owl:ObjectProperty , rdf:Property ;
+lac:SubjectCategory a owl:ObjectProperty ;
     skos:comment "broad subject categories"@en , "vastes catégories sémantiques"@fr ;
     rdfs:seeAlso <https://canada.multites.net/tsb/default.asp?lang=FRA&searchString=CS&op=SRCHSCAT> ;
     skos:isDefinedBy <https://canada.multites.net/cst/def.asp?lang=En&n=0594D979-1> , <https://canada.multites.net/tsb/def.asp?lang=Fr&n=0594D979-1> .
 
-lac:RelatedTerm a owl:ObjectProperty , rdf:Property ; 
+lac:RelatedTerm a owl:ObjectProperty ; 
     skos:label "Related term"@en , "terme associé"@fr ;
+    rdfs:domain lac:PreferredTerm ;
+    rdfs:range lac:PreferredTerm ;
     skos:definition "Preferred term that is mentally associated with another preferred term, but that is not part of the same hierarchy."@en , "Descripteur qu'on associe mentalement à un autre descripteur, mais qui ne fait pas partie d'une même hiérarchie."@fr ;
     skos:isDefinedBy <https://canada.multites.net/cst/def.asp?lang=En&n=0594D979-1> , <https://canada.multites.net/tsb/def.asp?lang=Fr&n=0594D979-1> .
