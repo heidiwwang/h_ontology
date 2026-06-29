@@ -15,6 +15,8 @@ NS_MAP = {
     "foaf": Namespace("http://xmlns.com/foaf/0.1/"),
     "skos": Namespace("http://www.w3.org/2004/02/skos/core#"),
     "schema": Namespace("https://schema.org/"),
+    "untp": Namespace("https://vocabulary.uncefact.org/untp/"),
+    "owl": Namespace("https://www.w3.org/2002/07/owl#"),
     # Add your own custom draft namespace prefix here
     "h2": Namespace("https://heidi2o.cc/"),
 }
